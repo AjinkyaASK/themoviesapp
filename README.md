@@ -2,16 +2,17 @@
   <br>
   <img src="https://repository-images.githubusercontent.com/285639870/2d705880-d842-11ea-8453-417f0f26105e" alt="Markdownify"></a>
   <br>
-  Markdownify
+  <br>
+  The Movies App
   <br>
 </h1>
 
-<h4 align="center">A minimal Markdown Editor desktop app built on top of <a href="http://electron.atom.io" target="_blank">Electron</a>.</h4>
+<h4 align="center">A simple and elegant Movies Collection and Inventory App built in <a href="http://electron.atom.io" target="_blank">Flutter</a>.</h4>
 
 <p align="center">
   <a href="https://badge.fury.io/js/electron-markdownify">
-    <img src="https://badge.fury.io/js/electron-markdownify.svg"
-         alt="Gitter">
+    <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg"
+         alt="Flutter">
   </a>
   <a href="https://gitter.im/amitmerchant1990/electron-markdownify"><img src="https://badges.gitter.im/amitmerchant1990/electron-markdownify.svg"></a>
   <a href="https://saythanks.io/to/amitmerchant1990">
