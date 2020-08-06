@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="https://repository-images.githubusercontent.com/285639870/2d705880-d842-11ea-8453-417f0f26105e" alt="Markdownify" width="200"></a>
+  <img src="https://repository-images.githubusercontent.com/285639870/2d705880-d842-11ea-8453-417f0f26105e" alt="Markdownify"></a>
   <br>
   Markdownify
   <br>
