@@ -107,11 +107,11 @@ This software uses the following open source packages:
 
 ## License
 
-MIT
+NA
 
 ---
 
-> [amitmerchant.com](https://www.amitmerchant.com) &nbsp;&middot;&nbsp;
-> GitHub [@amitmerchant1990](https://github.com/amitmerchant1990) &nbsp;&middot;&nbsp;
-> Twitter [@amit_merchant](https://twitter.com/amit_merchant)
+> GitHub [@AjinkyaASK](https://github.com/AjinkyaASK) &nbsp;&middot;&nbsp;
+> CodePen [@ajinkya-karanjikar](https://codepen.io/ajinkya-karanjikar)
+> LinkedIn [@ajinkyakaranjikar](https://in.linkedin.com/in/ajinkyakaranjikar)
 
