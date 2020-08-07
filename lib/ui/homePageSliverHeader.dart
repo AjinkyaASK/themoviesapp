@@ -16,22 +16,23 @@ class HomePageSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
       alignment: Alignment.bottomLeft,
       children: <Widget>[
         Container(
+          color: Colors.indigo[500],
           constraints: BoxConstraints.expand(),
           foregroundDecoration: BoxDecoration(
             color: Colors.indigo[600],
             gradient: LinearGradient(
               colors: [
                 Colors.indigo[500].withOpacity(0.8),
-                Color(0xFF090909),
+                Color(0xFF181822),
               ],
-              stops: [0, 0.9],
+              stops: [0, shrinkFactor],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
-            border: Border(
-              bottom: BorderSide(
-                  color: Colors.indigo.withOpacity(0.35), width: 0.5),
-            ),
+            // border: Border(
+            //   bottom: BorderSide(
+            //       color: Colors.indigo.withOpacity(0.35), width: 0.5),
+            // ),
           ),
           child: Opacity(
             opacity: shrinkFactorEnhanced,
@@ -131,6 +132,37 @@ class HomePageSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
                 Icons.search,
                 size: 24,
                 color: Colors.white.withOpacity(0.75),
+              ),
+              RichText(
+                text: TextSpan(
+                    text: 'TheMovies',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                      shadows: [
+                        BoxShadow(
+                            color: Colors.black54,
+                            blurRadius: 4,
+                            offset: Offset(1, 1))
+                      ],
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'App',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.lightBlue[300],
+                          shadows: [
+                            BoxShadow(
+                                color: Colors.black54,
+                                blurRadius: 4,
+                                offset: Offset(1, 1))
+                          ],
+                        ),
+                      )
+                    ]),
               ),
               Icon(
                 Icons.more_horiz,
