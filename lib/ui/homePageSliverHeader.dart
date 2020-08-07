@@ -52,6 +52,23 @@ class HomePageSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(4)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: Text(
+                    'Top Grossing',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.05,
+                      color: Colors.white.withOpacity(0.8),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8),
                 Flexible(
                   child: Text(
                     'The Persuit of Happiness Happiness Happiness Happiness Happiness ',
@@ -77,22 +94,22 @@ class HomePageSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
                       Icon(
                         Icons.star,
                         size: 20,
-                        color: Colors.amber,
+                        color: Colors.lightBlue,
                       ),
                       Icon(
                         Icons.star,
                         size: 20,
-                        color: Colors.amber,
+                        color: Colors.lightBlue,
                       ),
                       Icon(
                         Icons.star,
                         size: 20,
-                        color: Colors.amber,
+                        color: Colors.lightBlue,
                       ),
                       Icon(
                         Icons.star,
                         size: 20,
-                        color: Colors.amber,
+                        color: Colors.lightBlue,
                       ),
                       Icon(
                         Icons.star,
