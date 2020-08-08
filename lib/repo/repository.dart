@@ -10,6 +10,7 @@ class Repository {
   static final String moviesAllUrl = '${API.mainPath}/discover/movie';
   static final String moviesNowPlayingUrl = '${API.mainPath}/movie/now_playing';
   static final String moviesTopRatedUrl = '${API.mainPath}/movie/top_rated';
+  static final String moviesSearchUrl = '${API.mainPath}/search/movie';
   static final String genresUrl = '${API.mainPath}/genre/movie/list';
   static final String actorsUrl = '${API.mainPath}/trending/person/week';
 
@@ -36,6 +37,7 @@ class Repository {
 
   Future<MovieResponse> getMoviesNowPlaying() async {
     try {
+      print('$moviesNowPlayingUrl?api_key=${API.apiKey}');
       final response =
           await HTTP.get('$moviesNowPlayingUrl?api_key=${API.apiKey}');
       if (response.statusCode == 200) {
@@ -60,7 +62,29 @@ class Repository {
       }
     } catch (error, stackTrace) {
       print('Error in getMoviesTopRated(): $error, stackTrace: $stackTrace');
-      return MovieResponse.withError(error);
+      return MovieResponse.withError(error.toString());
+    }
+  }
+
+  Future<MovieResponse> getMoviesBySearch(String searchText) async {
+    if (searchText.length > 0) {
+      try {
+        print('$moviesSearchUrl?api_key=${API.apiKey}&query=$searchText');
+        final response = await HTTP
+            .get('$moviesSearchUrl?api_key=${API.apiKey}&query=$searchText');
+        if (response.statusCode == 200) {
+          print('Search results JSON: ${jsonDecode(response.body)}');
+          return MovieResponse.fromJson(jsonDecode(response.body));
+        } else {
+          throw Exception(
+              'Failed to get movie details: ${response.statusCode} - ${response.body}');
+        }
+      } catch (error, stackTrace) {
+        print('Error in getMoviesBySearch(): $error, stackTrace: $stackTrace');
+        throw Exception('Failed to get movie details');
+      }
+    } else {
+      return MovieResponse();
     }
   }
 
@@ -77,7 +101,7 @@ class Repository {
       return MovieResponse.fromJson(jsonDecode(response.body));
     } catch (error, stackTrace) {
       print('Error in getMoviesByGenre(): $error, stackTrace: $stackTrace');
-      return MovieResponse.withError(error);
+      return MovieResponse.withError(error.toString());
     }
   }
 
@@ -87,7 +111,7 @@ class Repository {
       return GenreResponse.fromJson(jsonDecode(response.body));
     } catch (error, stackTrace) {
       print('Error in getGenres(): $error, stackTrace: $stackTrace');
-      return GenreResponse.withError(error);
+      return GenreResponse.withError(error.toString());
     }
   }
 

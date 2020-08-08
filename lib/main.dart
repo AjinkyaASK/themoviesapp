@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -14,7 +15,9 @@ import 'package:themoviesapp/ui/homePageSliverHeader.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import 'bloc/bloc_moviesearch.dart';
 import 'ui/noResultsWidget.dart';
 import 'utils/values.dart';
 
@@ -45,9 +48,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   MovieResponse allMoviesData;
+  int nowPlayingMoviesCount = 0;
+  int currentNowPlayingPageIndex = 0;
 
   bool isNowPlayingListLoading = false;
   List<Movie> searchedMovies = [];
+
+  ScrollController _nowPlayingScrollController = ScrollController();
+  final nowPlayingPageController = PageController(viewportFraction: 0.9);
+
+  String searchText = '';
 
   void initMoviesList() async {
     await blocMoviesNowPlaying.getMovies();
@@ -58,25 +68,37 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-  ScrollController _nowPlayingScrollController = ScrollController();
+  void autoSlideNowPlayingPages() {
+    Timer.periodic(Duration(seconds: 5), (Timer timer) {
+      if (nowPlayingMoviesCount > 1) {
+        if (currentNowPlayingPageIndex < nowPlayingMoviesCount) {
+          currentNowPlayingPageIndex++;
+        } else {
+          currentNowPlayingPageIndex = 0;
+        }
+
+        nowPlayingPageController.animateToPage(
+          currentNowPlayingPageIndex,
+          duration: Duration(milliseconds: 750),
+          curve: Curves.easeIn,
+        );
+      }
+    });
+  }
 
   @override
   void initState() {
     initMoviesList();
+    autoSlideNowPlayingPages();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    String searchText = '';
-
     _nowPlayingScrollController.addListener(() {
       if (_nowPlayingScrollController.position.maxScrollExtent ==
           _nowPlayingScrollController.position.pixels) {
         print('Reched List End');
-        if (!isNowPlayingListLoading) {
-          isNowPlayingListLoading = !isNowPlayingListLoading;
-        }
       }
     });
 
@@ -103,42 +125,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      // Padding(
-                      //   padding: const EdgeInsets.all(20),
-                      //   child: TextField(
-                      //     decoration:
-                      //         InputDecoration(hintText: 'Search movies here'),
-                      //     onChanged: (text) {
-                      //       searchText = text.toLowerCase();
-                      //       setState(() {
-                      //         searchedMovies =
-                      //             allMoviesData.movies.where((element) {
-                      //           var title = element.title.toLowerCase();
-                      //           return title.contains(text);
-                      //         }).toList();
-                      //       });
-                      //     },
-                      //     onSubmitted: (text) {
-                      //       isSearching = false;
-                      //     },
-                      //   ),
-                      // ),
-                      // Container(
-                      //   height: 250,
-                      //   child: ListView.builder(
-                      //     scrollDirection: Axis.vertical,
-                      //     physics: BouncingScrollPhysics(),
-                      //     itemCount: searchedMovies.length,
-                      //     itemBuilder: (context, index) {
-                      //       return Card(
-                      //         child: Text(searchedMovies[index].title),
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 12, horizontal: 16),
+                        padding: const EdgeInsets.only(
+                            top: 12, bottom: 16, left: 16, right: 16),
                         child: Text(
                           'Now Playing',
                           style: TextStyle(
@@ -154,109 +143,129 @@ class _MyHomePageState extends State<MyHomePage> {
                           if (!snapshot.hasData) {
                             return Text('Loading...');
                           }
-                          return Container(
-                            height: 290,
-                            child: ListView.builder(
-                              controller: _nowPlayingScrollController,
-                              scrollDirection: Axis.horizontal,
-                              physics: BouncingScrollPhysics(),
-                              itemCount: snapshot.data.movies.length + 1,
-                              itemBuilder: (context, index) {
-                                if (index == snapshot.data.movies.length) {
-                                  return Container(
-                                    width: 120,
-                                    height: 290,
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.only(
-                                        bottom: 40, right: 20),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        CupertinoActivityIndicator(radius: 15),
-                                        // SizedBox(height: 20),
-                                        // Text(
-                                        //   'Wait',
-                                        //   style: TextStyle(
-                                        //     fontSize: 12,
-                                        //     color: Colors.white.withOpacity(0.5),
-                                        //   ),
-                                        // ),
-                                      ],
-                                    ),
-                                  );
-                                }
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => MoviePage(
-                                                  index: index,
-                                                  moviesList:
-                                                      snapshot.data.movies,
-                                                )));
-                                  },
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        height: 250,
-                                        width: 190,
-                                        margin: EdgeInsets.only(
-                                            left: 16, right: 16),
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[900],
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          border: Border.all(
-                                            width: 1,
-                                            color:
-                                                Colors.indigo.withOpacity(0.15),
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Color(0xFF333388)
-                                                    .withOpacity(0.35),
-                                                blurRadius: 40,
-                                                offset: Offset(0, 12)),
+                          nowPlayingMoviesCount = snapshot.data.movies.length;
+                          return Column(
+                            children: <Widget>[
+                              Container(
+                                height: 230,
+                                child: PageView.builder(
+                                  controller: nowPlayingPageController,
+                                  //pageSnapping: false,
+                                  scrollDirection: Axis.horizontal,
+                                  physics: BouncingScrollPhysics(),
+                                  itemCount: snapshot.data.movies.length,
+                                  itemBuilder: (context, index) {
+                                    if (index == snapshot.data.movies.length) {
+                                      return Container(
+                                        width: 120,
+                                        height: 290,
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.only(
+                                            bottom: 40, right: 20),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            CupertinoActivityIndicator(
+                                                radius: 15),
+                                            // SizedBox(height: 20),
+                                            // Text(
+                                            //   'Wait',
+                                            //   style: TextStyle(
+                                            //     fontSize: 12,
+                                            //     color: Colors.white.withOpacity(0.5),
+                                            //   ),
+                                            // ),
                                           ],
                                         ),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          clipBehavior: Clip.hardEdge,
-                                          child: CachedNetworkImage(
-                                            imageUrl: snapshot
-                                                .data.movies[index].poster,
-                                            fit: BoxFit.cover,
+                                      );
+                                    }
+                                    // print(
+                                    //     snapshot.data.movies[index].backPoster);
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                                builder: (context) => MoviePage(
+                                                      movie: snapshot
+                                                          .data.movies[index],
+                                                    )));
+                                      },
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Container(
+                                            height: 180,
+                                            width: double.maxFinite,
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 8),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[900],
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              border: Border.all(
+                                                width: 1,
+                                                color: Colors.indigo
+                                                    .withOpacity(0.15),
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: Color(0xFF333388)
+                                                        .withOpacity(0.35),
+                                                    blurRadius: 40,
+                                                    offset: Offset(0, 12)),
+                                              ],
+                                            ),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              clipBehavior: Clip.hardEdge,
+                                              child: CachedNetworkImage(
+                                                imageUrl: snapshot.data
+                                                    .movies[index].backPoster,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      Container(
-                                        alignment: Alignment.bottomLeft,
-                                        width: 210,
-                                        height: 30,
-                                        padding: const EdgeInsets.only(
-                                            left: 16, right: 16),
-                                        child: Text(
-                                          snapshot.data.movies[index].title,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color:
-                                                Colors.white.withOpacity(0.65),
-                                            fontWeight: FontWeight.w400,
+                                          Container(
+                                            alignment: Alignment.bottomLeft,
+                                            width: 210,
+                                            height: 30,
+                                            padding: const EdgeInsets.only(
+                                                left: 16, right: 16),
+                                            child: Text(
+                                              snapshot.data.movies[index].title,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white
+                                                    .withOpacity(0.65),
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              SmoothPageIndicator(
+                                controller: nowPlayingPageController,
+                                count: snapshot.data.movies.length,
+                                effect: ExpandingDotsEffect(
+                                  dotHeight: 6,
+                                  dotWidth: 6,
+                                  dotColor: Colors.white.withOpacity(0.35),
+                                  activeDotColor: Colors.lightBlue,
+                                ),
+                              ),
+                            ],
                           );
                         },
                       ),
@@ -688,18 +697,21 @@ class _MyHomePageState extends State<MyHomePage> {
                                 InputDecoration(hintText: 'Search movies here'),
                             onChanged: (text) {
                               searchText = text;
-                              searchedMovies =
-                                  allMoviesData.movies.where((element) {
-                                return element.title
-                                    .toLowerCase()
-                                    .contains(text);
-                              }).toList();
+                              searchProvider.notifyChanges();
+                              // searchedMovies =
+                              //     allMoviesData.movies.where((element) {
+                              //   return element.title
+                              //       .toLowerCase()
+                              //       .contains(text);
+                              // }).toList();
                               // searchedMovies = searchedMovies.sublist(0,
                               //     [searchedMovies.length - 1, 50].reduce(min));
-                              searchProvider.movies = searchedMovies;
+                              //searchProvider.movies = searchedMovies;
                             },
                             onSubmitted: (text) {
-                              isSearching = false;
+                              searchProvider.notifyChanges();
+                              //isSearching = false;
+                              //setState(() {});
                             },
                           ),
                         ),
@@ -708,6 +720,39 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   SizedBox(height: 50),
+                  // FutureBuilder(
+                  //   future: blocMoviesSearch.fetchMovies(searchText),
+                  //   builder: (context, snapshot) {
+                  //     if (!snapshot.hasData) {
+                  //       print('Snapshot has no data for $searchText');
+                  //       return DoTheSearchWidget();
+                  //     }
+                  //     print(
+                  //         'Snapshot has some data of length: ${snapshot.data.length}');
+                  //     return snapshot.data.length > 0
+                  //         ? GridView.builder(
+                  //             padding: const EdgeInsets.all(10),
+                  //             shrinkWrap: true,
+                  //             //physics: NeverScrollableScrollPhysics(),
+                  //             itemCount: snapshot.data.length,
+                  //             gridDelegate:
+                  //                 SliverGridDelegateWithFixedCrossAxisCount(
+                  //               crossAxisCount: 3,
+                  //             ),
+                  //             itemBuilder: (BuildContext context, int index) {
+                  //               return new Card(
+                  //                 child: new GridTile(
+                  //                   footer:
+                  //                       new Text(snapshot.data[index].title),
+                  //                   child: new Text(snapshot.data[index].rating
+                  //                       .toString()), //just for testing, will fill with image later
+                  //                 ),
+                  //               );
+                  //             },
+                  //           )
+                  //         : NoResultsWidget();
+                  //   },
+                  // ),
                   ChangeNotifierProvider(
                     create: (_) {
                       return searchProvider;
@@ -715,32 +760,110 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Consumer<SearchProvider>(
                       builder: (_, __, ___) {
                         return Flexible(
-                          child: searchProvider.movies.length > 0
-                              ? GridView.builder(
-                                  padding: const EdgeInsets.all(10),
-                                  shrinkWrap: true,
-                                  //physics: NeverScrollableScrollPhysics(),
-                                  itemCount: searchProvider.movies.length,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                  ),
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return new Card(
-                                      child: new GridTile(
-                                        footer: new Text(
-                                            searchProvider.movies[index].title),
-                                        child: new Text(searchProvider
-                                            .movies[index].rating
-                                            .toString()), //just for testing, will fill with image later
-                                      ),
-                                    );
+                          child: searchText.length > 0
+                              ? FutureBuilder(
+                                  future:
+                                      blocMoviesSearch.fetchMovies(searchText),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      print(
+                                          'Snapshot has no data for $searchText');
+                                      return DoTheSearchWidget();
+                                    }
+                                    print(
+                                        'Snapshot has some data of length: ${snapshot.data.length}');
+                                    return snapshot.data.length > 0
+                                        ? GridView.builder(
+                                            padding: const EdgeInsets.all(10),
+                                            shrinkWrap: true,
+                                            //physics: NeverScrollableScrollPhysics(),
+                                            itemCount: snapshot.data.length,
+                                            gridDelegate:
+                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 3,
+                                            ),
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return Stack(
+                                                children: <Widget>[
+                                                  Container(
+                                                    margin: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 6),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.grey[900],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      border: Border.all(
+                                                        width: 1,
+                                                        color: Colors.indigo
+                                                            .withOpacity(0.15),
+                                                      ),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                            color: Color(
+                                                                    0xFF333388)
+                                                                .withOpacity(
+                                                                    0.25),
+                                                            blurRadius: 40,
+                                                            offset:
+                                                                Offset(0, 12)),
+                                                      ],
+                                                    ),
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              6),
+                                                      clipBehavior:
+                                                          Clip.hardEdge,
+                                                      child: Container(
+                                                        height: 160,
+                                                        width: 120,
+                                                        foregroundDecoration:
+                                                            BoxDecoration(
+                                                          gradient: LinearGradient(
+                                                              colors: [
+                                                                Colors.black
+                                                                    .withOpacity(
+                                                                        0),
+                                                                Colors
+                                                                    .indigo[800]
+                                                              ],
+                                                              begin: Alignment
+                                                                  .topRight,
+                                                              end: Alignment
+                                                                  .bottomLeft),
+                                                        ),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl: snapshot
+                                                              .data[index]
+                                                              .poster,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    left: 16,
+                                                    bottom: 16,
+                                                    right: 16,
+                                                    child: Text(
+                                                      snapshot
+                                                          .data[index].title,
+                                                      style: TextStyle(
+                                                          fontSize: 14),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          )
+                                        : NoResultsWidget();
                                   },
                                 )
-                              : searchText.length > 0
-                                  ? NoResultsWidget()
-                                  : DoTheSearchWidget(),
+                              : DoTheSearchWidget(),
                         );
                       },
                     ),

@@ -1,16 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:themoviesapp/model/movie.dart';
 import 'package:themoviesapp/ui/moviePageSliverHeader.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class MoviePage extends StatefulWidget {
-  final int index;
-  final List moviesList;
+  final Movie movie;
 
   MoviePage({
     Key key,
-    this.index = 0,
-    this.moviesList,
+    this.movie,
   }) : super(key: key);
 
   @override
@@ -51,8 +50,8 @@ class _MoviePageState extends State<MoviePage> {
         slivers: <Widget>[
           SliverPersistentHeader(
             pinned: true,
-            delegate: MoviePageSliverHeaderDelegate(
-                posterPath: widget.moviesList[widget.index].poster),
+            delegate:
+                MoviePageSliverHeaderDelegate(posterPath: widget.movie.poster),
           ),
           SliverToBoxAdapter(
             child: Container(
@@ -73,13 +72,13 @@ class _MoviePageState extends State<MoviePage> {
                               padding:
                                   const EdgeInsets.only(top: 16, bottom: 16),
                               child: Text(
-                                widget.moviesList[widget.index].title,
+                                widget.movie.title,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 24,
                                   color: Colors.white.withOpacity(0.9),
-                                  fontWeight: FontWeight.w300,
+                                  fontWeight: FontWeight.w600,
                                   shadows: [
                                     BoxShadow(
                                         color: Colors.black38,
@@ -90,47 +89,95 @@ class _MoviePageState extends State<MoviePage> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.star,
-                                  size: 20,
-                                  color: Colors.lightBlue,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  size: 20,
-                                  color: Colors.lightBlue,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  size: 20,
-                                  color: Colors.lightBlue,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  size: 20,
-                                  color: Colors.lightBlue,
-                                ),
-                                Icon(
-                                  Icons.star,
-                                  size: 20,
-                                  color: Colors.grey[300].withOpacity(0.8),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 8),
-                                  child: Text(
-                                    '(${widget.moviesList[widget.index].voteCount})',
-                                    style: TextStyle(
-                                      color: Colors.white.withOpacity(0.75),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Column(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.language,
+                                    size: 24,
+                                    color: Colors.white.withOpacity(0.75),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 12),
+                                    child: Text(
+                                      'English',
+                                      style: TextStyle(
+                                        color: Colors.white.withOpacity(0.75),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.favorite,
+                                    size: 24,
+                                    color: Colors.red,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 12),
+                                    child: Text(
+                                      widget.movie.voteCount.toString(),
+                                      style: TextStyle(
+                                        color: Colors.white.withOpacity(0.75),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.remove_red_eye,
+                                    size: 24,
+                                    color: Colors.white.withOpacity(0.75),
+                                  ),
+                                  SizedBox(height: 12),
+                                  Text(
+                                    widget.movie.popularity.toString(),
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.9),
+                                      fontWeight: FontWeight.w300,
+                                      shadows: [
+                                        BoxShadow(
+                                            color: Colors.black38,
+                                            blurRadius: 4,
+                                            offset: Offset(1, 1))
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.rate_review,
+                                    size: 24,
+                                    color: Colors.white.withOpacity(0.75),
+                                  ),
+                                  SizedBox(height: 12),
+                                  Text(
+                                    widget.movie.rating.toString(),
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.9),
+                                      fontWeight: FontWeight.w300,
+                                      shadows: [
+                                        BoxShadow(
+                                            color: Colors.black38,
+                                            blurRadius: 4,
+                                            offset: Offset(1, 1))
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
+                          SizedBox(height: 20),
                           Container(
                             decoration: BoxDecoration(
                                 color: Colors.white.withOpacity(0.15),
@@ -149,10 +196,10 @@ class _MoviePageState extends State<MoviePage> {
                             ),
                           ),
                           Text(
-                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                            widget.movie.overview,
                             textAlign: TextAlign.justify,
-                            maxLines: 5,
-                            overflow: TextOverflow.fade,
+                            maxLines: 7,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: Colors.white.withOpacity(0.75),
                             ),

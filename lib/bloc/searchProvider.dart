@@ -12,4 +12,6 @@ class SearchProvider with ChangeNotifier {
     _movies = movies;
     notifyListeners();
   }
+
+  void notifyChanges() => notifyListeners();
 }

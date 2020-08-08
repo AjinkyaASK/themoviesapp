@@ -4,6 +4,7 @@ class Movie {
   final String poster;
   final String backPoster;
   final String overview;
+  final String releaseDate;
   final double popularity;
   final double rating;
   final int voteCount;
@@ -15,17 +16,23 @@ class Movie {
       this.backPoster,
       this.overview,
       this.popularity,
+      this.releaseDate,
       this.rating,
       this.voteCount});
 
   Movie.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         title = json['title'],
-        poster = 'https://image.tmdb.org/t/p/w200' + json['poster_path'],
-        backPoster = json['backdrop_path'],
+        poster = 'https://image.tmdb.org/t/p/w200' +
+            (json['poster_path'] ?? '/fKtYXUhX5fxMxzQfyUcQW9Shik6.jpg'),
+        backPoster = 'https://image.tmdb.org/t/p/w400' +
+            (json['backdrop_path'] ??
+                json['poster_path'] ??
+                '/fKtYXUhX5fxMxzQfyUcQW9Shik6.jpg'),
         overview = json['overview'],
         popularity = json['popularity'],
-        rating = json['rating'],
+        rating = json['vote_average'],
+        releaseDate = json['release_date'],
         voteCount = json['vote_count'];
 }
 
