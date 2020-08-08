@@ -1,13 +1,10 @@
 <h1 align="center">
   <br>
-  <img src="https://github.com/AjinkyaASK/themoviesapp" alt="Markdownify"></a>
-  <br>
-  <br>
   The Movies App
   <br>
 </h1>
 
-<h4 align="center">A simple and elegant Movies Collection and Inventory App built in <a href="http://electron.atom.io" target="_blank">Flutter</a>.</h4>
+<h4 align="center">A simple and elegant Movies Collection and Inventory App built with <a href="https://flutter.dev/" target="_blank">Flutter</a>.</h4>
 
 <p align="center">
   <a href="https://github.com/AjinkyaASK/themoviesapp">
