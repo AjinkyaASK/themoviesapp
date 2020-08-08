@@ -47,7 +47,7 @@
 
 ## Screenshots
 
-<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/1.png"
+<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/1.png" width='350px'
          alt="Screenshots">
 <img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/2.png"
          alt="Screenshots">
