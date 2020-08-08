@@ -5,9 +5,7 @@
   </a>
 </p>
 <br>
-<br>
 <h4 align="center">A simple and elegant Movies Collection and Inventory App built with <a href="https://flutter.dev/" target="_blank">Flutter</a>.</h4>
-<br>
 <br>
 <p align="center">
   <a href="#key-features">Key Features</a> •
