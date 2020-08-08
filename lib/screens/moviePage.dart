@@ -50,8 +50,9 @@ class _MoviePageState extends State<MoviePage> {
         slivers: <Widget>[
           SliverPersistentHeader(
             pinned: true,
-            delegate:
-                MoviePageSliverHeaderDelegate(posterPath: widget.movie.poster),
+            delegate: MoviePageSliverHeaderDelegate(
+                posterPath: widget.movie.poster,
+                backPosterPath: widget.movie.backPoster),
           ),
           SliverToBoxAdapter(
             child: Container(
@@ -114,9 +115,32 @@ class _MoviePageState extends State<MoviePage> {
                               Column(
                                 children: <Widget>[
                                   Icon(
+                                    Icons.star,
+                                    size: 24,
+                                    color: Colors.amber[200].withOpacity(0.75),
+                                  ),
+                                  SizedBox(height: 12),
+                                  Text(
+                                    widget.movie.rating.toString(),
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.9),
+                                      fontWeight: FontWeight.w300,
+                                      shadows: [
+                                        BoxShadow(
+                                            color: Colors.black38,
+                                            blurRadius: 4,
+                                            offset: Offset(1, 1))
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Icon(
                                     Icons.favorite,
                                     size: 24,
-                                    color: Colors.red,
+                                    color: Colors.red[400],
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(top: 12),
@@ -152,29 +176,6 @@ class _MoviePageState extends State<MoviePage> {
                                   ),
                                 ],
                               ),
-                              Column(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.rate_review,
-                                    size: 24,
-                                    color: Colors.white.withOpacity(0.75),
-                                  ),
-                                  SizedBox(height: 12),
-                                  Text(
-                                    widget.movie.rating.toString(),
-                                    style: TextStyle(
-                                      color: Colors.white.withOpacity(0.9),
-                                      fontWeight: FontWeight.w300,
-                                      shadows: [
-                                        BoxShadow(
-                                            color: Colors.black38,
-                                            blurRadius: 4,
-                                            offset: Offset(1, 1))
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ],
                           ),
                           SizedBox(height: 20),
@@ -183,8 +184,8 @@ class _MoviePageState extends State<MoviePage> {
                                 color: Colors.white.withOpacity(0.15),
                                 borderRadius: BorderRadius.circular(4)),
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
-                            margin: const EdgeInsets.only(bottom: 18, top: 12),
+                                horizontal: 8, vertical: 6),
+                            margin: const EdgeInsets.only(bottom: 24, top: 12),
                             child: Text(
                               'Synopsis',
                               style: TextStyle(
@@ -198,7 +199,7 @@ class _MoviePageState extends State<MoviePage> {
                           Text(
                             widget.movie.overview,
                             textAlign: TextAlign.justify,
-                            maxLines: 7,
+                            maxLines: 10,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: Colors.white.withOpacity(0.75),
@@ -213,7 +214,7 @@ class _MoviePageState extends State<MoviePage> {
                                 borderRadius: BorderRadius.circular(4)),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 4),
-                            margin: const EdgeInsets.only(bottom: 18, top: 12),
+                            margin: const EdgeInsets.only(bottom: 18, top: 22),
                             child: Text(
                               'Read More',
                               style: TextStyle(
@@ -294,7 +295,8 @@ class _MoviePageState extends State<MoviePage> {
                                       height: 40,
                                       width: 80,
                                       child: Text(
-                                        actorsData[index]['title'],
+                                        //actorsData[index]['title'],
+                                        '',
                                         textAlign: TextAlign.center,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,

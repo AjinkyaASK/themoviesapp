@@ -6,8 +6,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class MoviePageSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   final String posterPath;
+  final String backPosterPath;
 
-  MoviePageSliverHeaderDelegate({this.posterPath});
+  MoviePageSliverHeaderDelegate({this.posterPath, this.backPosterPath});
 
   @override
   Widget build(
@@ -27,7 +28,7 @@ class MoviePageSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
             color: Colors.indigo[600],
             gradient: LinearGradient(
               colors: [
-                Colors.indigo[500].withOpacity(0.8),
+                Colors.indigo[500].withOpacity(0.25),
                 Color(0xFF181822),
               ],
               stops: [0, shrinkFactor],
@@ -42,7 +43,7 @@ class MoviePageSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
           child: Opacity(
             opacity: shrinkFactorEnhanced,
             child: CachedNetworkImage(
-              imageUrl: posterPath,
+              imageUrl: backPosterPath,
               fit: BoxFit.cover,
               alignment: Alignment.center,
             ),

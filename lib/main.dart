@@ -382,60 +382,72 @@ class _MyHomePageState extends State<MyHomePage> {
                               physics: BouncingScrollPhysics(),
                               itemCount: snapshot.data.movies.length,
                               itemBuilder: (context, index) {
-                                return Stack(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 6),
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[900],
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                          width: 1,
-                                          color:
-                                              Colors.indigo.withOpacity(0.15),
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Color(0xFF333388)
-                                                  .withOpacity(0.25),
-                                              blurRadius: 40,
-                                              offset: Offset(0, 12)),
-                                        ],
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(6),
-                                        clipBehavior: Clip.hardEdge,
-                                        child: Container(
-                                          height: 160,
-                                          width: 120,
-                                          foregroundDecoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                                colors: [
-                                                  Colors.black.withOpacity(0),
-                                                  Colors.indigo[800]
-                                                ],
-                                                begin: Alignment.topRight,
-                                                end: Alignment.bottomLeft),
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (context) => MoviePage(
+                                                  movie: snapshot
+                                                      .data.movies[index],
+                                                )));
+                                  },
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 6),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[900],
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          border: Border.all(
+                                            width: 1,
+                                            color:
+                                                Colors.indigo.withOpacity(0.15),
                                           ),
-                                          child: CachedNetworkImage(
-                                            imageUrl: snapshot
-                                                .data.movies[index].poster,
-                                            fit: BoxFit.cover,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Color(0xFF333388)
+                                                    .withOpacity(0.25),
+                                                blurRadius: 40,
+                                                offset: Offset(0, 12)),
+                                          ],
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                          clipBehavior: Clip.hardEdge,
+                                          child: Container(
+                                            height: 160,
+                                            width: 120,
+                                            foregroundDecoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                  colors: [
+                                                    Colors.black.withOpacity(0),
+                                                    Colors.indigo[800]
+                                                  ],
+                                                  begin: Alignment.topRight,
+                                                  end: Alignment.bottomLeft),
+                                            ),
+                                            child: CachedNetworkImage(
+                                              imageUrl: snapshot
+                                                  .data.movies[index].poster,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Positioned(
-                                      left: 16,
-                                      bottom: 16,
-                                      right: 16,
-                                      child: Text(
-                                        snapshot.data.movies[index].title,
-                                        style: TextStyle(fontSize: 14),
+                                      Positioned(
+                                        left: 16,
+                                        bottom: 16,
+                                        right: 16,
+                                        child: Text(
+                                          snapshot.data.movies[index].title,
+                                          style: TextStyle(fontSize: 14),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 );
                               },
                             ),
@@ -472,171 +484,170 @@ class _MyHomePageState extends State<MyHomePage> {
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: snapshot.data.movies.length,
                               itemBuilder: (context, index) {
-                                return Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
-                                      height: 200,
-                                      //width: 190,
-                                      margin: const EdgeInsets.only(
-                                        left: 16,
-                                        right: 16,
-                                        top: 8,
-                                        bottom: 8,
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (context) => MoviePage(
+                                                  movie: snapshot
+                                                      .data.movies[index],
+                                                )));
+                                  },
+                                  child: Container(
+                                    height: 200,
+                                    //width: 190,
+                                    margin: const EdgeInsets.only(
+                                      left: 16,
+                                      right: 16,
+                                      top: 8,
+                                      bottom: 8,
+                                    ),
+                                    padding: const EdgeInsets.all(0),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFF181822),
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        width: 1,
+                                        color: Colors.indigo.withOpacity(0.15),
                                       ),
-                                      padding: const EdgeInsets.all(0),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFF181822),
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                          width: 1,
-                                          color:
-                                              Colors.indigo.withOpacity(0.15),
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Color(0xFF333388)
-                                                  .withOpacity(0.35),
-                                              blurRadius: 40,
-                                              offset: Offset(0, 12)),
-                                        ],
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            clipBehavior: Clip.hardEdge,
-                                            child: Container(
-                                              width: 120,
-                                              height: 200,
-                                              child: CachedNetworkImage(
-                                                imageUrl: snapshot
-                                                    .data.movies[index].poster,
-                                                fit: BoxFit.cover,
-                                              ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Color(0xFF333388)
+                                                .withOpacity(0.35),
+                                            blurRadius: 40,
+                                            offset: Offset(0, 12)),
+                                      ],
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          clipBehavior: Clip.hardEdge,
+                                          child: Container(
+                                            width: 120,
+                                            height: 200,
+                                            child: CachedNetworkImage(
+                                              imageUrl: snapshot
+                                                  .data.movies[index].poster,
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
-                                          SizedBox(width: 18),
-                                          Container(
-                                            child: Expanded(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  SizedBox(height: 18),
-                                                  Flexible(
-                                                    child: Text(
-                                                      snapshot.data
-                                                          .movies[index].title,
-                                                      maxLines: 3,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.white
-                                                            .withOpacity(0.65),
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
+                                        ),
+                                        SizedBox(width: 18),
+                                        Container(
+                                          child: Expanded(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                SizedBox(height: 18),
+                                                Flexible(
+                                                  child: Text(
+                                                    snapshot.data.movies[index]
+                                                        .title,
+                                                    maxLines: 3,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.white
+                                                          .withOpacity(0.65),
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
-                                                  Container(
-                                                    margin: const EdgeInsets
-                                                            .symmetric(
-                                                        vertical: 12),
-                                                    height: 2,
-                                                    width: 34,
-                                                    color:
-                                                        Colors.lightBlue[500],
-                                                  ),
-                                                  Row(
-                                                    children: <Widget>[
-                                                      Icon(
-                                                        Icons.star,
-                                                        size: 16,
-                                                        color: Colors.lightBlue,
-                                                      ),
-                                                      Icon(
-                                                        Icons.star,
-                                                        size: 16,
-                                                        color: Colors.lightBlue,
-                                                      ),
-                                                      Icon(
-                                                        Icons.star,
-                                                        size: 16,
-                                                        color: Colors.lightBlue,
-                                                      ),
-                                                      Icon(
-                                                        Icons.star,
-                                                        size: 16,
-                                                        color: Colors.lightBlue,
-                                                      ),
-                                                      Icon(
-                                                        Icons.star,
-                                                        size: 16,
-                                                        color: Colors.grey[300]
-                                                            .withOpacity(0.8),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left: 4),
-                                                        child: Text(
-                                                          '(${snapshot.data.movies[index].voteCount})',
-                                                          style: TextStyle(
-                                                            fontSize: 12,
-                                                            color: Colors.white
-                                                                .withOpacity(
-                                                                    0.75),
-                                                          ),
+                                                ),
+                                                Container(
+                                                  margin: const EdgeInsets
+                                                      .symmetric(vertical: 12),
+                                                  height: 2,
+                                                  width: 34,
+                                                  color: Colors.lightBlue[500],
+                                                ),
+                                                Row(
+                                                  children: <Widget>[
+                                                    Icon(
+                                                      Icons.star,
+                                                      size: 16,
+                                                      color: Colors.lightBlue,
+                                                    ),
+                                                    Icon(
+                                                      Icons.star,
+                                                      size: 16,
+                                                      color: Colors.lightBlue,
+                                                    ),
+                                                    Icon(
+                                                      Icons.star,
+                                                      size: 16,
+                                                      color: Colors.lightBlue,
+                                                    ),
+                                                    Icon(
+                                                      Icons.star,
+                                                      size: 16,
+                                                      color: Colors.lightBlue,
+                                                    ),
+                                                    Icon(
+                                                      Icons.star,
+                                                      size: 16,
+                                                      color: Colors.grey[300]
+                                                          .withOpacity(0.8),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 4),
+                                                      child: Text(
+                                                        '(${snapshot.data.movies[index].voteCount})',
+                                                        style: TextStyle(
+                                                          fontSize: 12,
+                                                          color: Colors.white
+                                                              .withOpacity(
+                                                                  0.75),
                                                         ),
                                                       ),
-                                                    ],
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(
-                                                        top: 12),
-                                                    child: Text(
-                                                      'Languages: NA}',
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        color: Colors.white
-                                                            .withOpacity(0.65),
-                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 12),
+                                                  child: Text(
+                                                    'Languages: NA}',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.white
+                                                          .withOpacity(0.65),
                                                     ),
                                                   ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.only(top: 8),
-                                                    child: Text(
-                                                      'Release: NA}',
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.white
-                                                            .withOpacity(0.75),
-                                                      ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 8),
+                                                  child: Text(
+                                                    'Release: NA}',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.white
+                                                          .withOpacity(0.75),
                                                     ),
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          SizedBox(width: 12),
-                                        ],
-                                      ),
+                                        ),
+                                        SizedBox(width: 12),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 );
                               },
                             ),

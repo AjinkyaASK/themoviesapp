@@ -5,9 +5,9 @@ class Movie {
   final String backPoster;
   final String overview;
   final String releaseDate;
-  final double popularity;
-  final double rating;
-  final int voteCount;
+  final String popularity;
+  final String rating;
+  final String voteCount;
 
   Movie(
       {this.id,
@@ -30,10 +30,10 @@ class Movie {
                 json['poster_path'] ??
                 '/fKtYXUhX5fxMxzQfyUcQW9Shik6.jpg'),
         overview = json['overview'],
-        popularity = json['popularity'],
-        rating = json['vote_average'],
+        popularity = '${json['popularity']}',
+        rating = '${json['vote_average']}',
         releaseDate = json['release_date'],
-        voteCount = json['vote_count'];
+        voteCount = '${json['vote_count']}';
 }
 
 class MovieResponse {
