@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://github.com/AjinkyaASK/themoviesapp">
-    <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg"
+    <img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/TheMoviesApp%20-%20GitHub%20Banner.png"
          alt="Flutter">
   </a>
 </p>
