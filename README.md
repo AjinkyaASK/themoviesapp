@@ -1,18 +1,14 @@
-<h1 align="center">
-  <br>
-  The Movies App
-  <br>
-</h1>
-
-<h4 align="center">A simple and elegant Movies Collection and Inventory App built with <a href="https://flutter.dev/" target="_blank">Flutter</a>.</h4>
-
 <p align="center">
   <a href="https://github.com/AjinkyaASK/themoviesapp">
     <img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/TheMoviesApp%20-%20GitHub%20Banner.png"
          alt="Flutter">
   </a>
 </p>
-
+<br>
+<br>
+<h4 align="center">A simple and elegant Movies Collection and Inventory App built with <a href="https://flutter.dev/" target="_blank">Flutter</a>.</h4>
+<br>
+<br>
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
