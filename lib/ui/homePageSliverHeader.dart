@@ -2,8 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:themoviesapp/utils/values.dart';
 
 class HomePageSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final VoidCallback callback;
+
+  HomePageSliverHeaderDelegate({this.callback});
+
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -139,16 +144,15 @@ class HomePageSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
           ),
         ),
         Positioned(
-          top: 20 + MediaQuery.of(context).padding.top,
-          left: 20,
+          top: MediaQuery.of(context).padding.top,
+          left: 0,
           right: 20,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Icon(
-                Icons.search,
-                size: 24,
-                color: Colors.white.withOpacity(0.75),
+              Container(
+                height: 60,
+                width: 45,
               ),
               RichText(
                 text: TextSpan(
