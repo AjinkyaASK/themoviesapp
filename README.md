@@ -37,19 +37,19 @@
 
 ## Screenshots
 
-<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/1.png" width='300px'
+<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/1.png" width='250px'
          alt="Screenshots">
-<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/2.png" width='300px'
+<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/2.png" width='250px'
          alt="Screenshots">
-<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/3.png" width='300px'
+<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/3.png" width='250px'
          alt="Screenshots">
-<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/4.png" width='300px'
+<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/4.png" width='250px'
          alt="Screenshots">
-<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/5.png" width='300px'
+<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/5.png" width='250px'
          alt="Screenshots">
-<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/6.png" width='300px'
+<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/6.png" width='250px'
          alt="Screenshots">
-<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/7.png" width='300px'
+<img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/7.png" width='250px'
          alt="Screenshots">
 
 ## Download
