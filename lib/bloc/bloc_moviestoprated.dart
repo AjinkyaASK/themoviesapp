@@ -5,18 +5,24 @@ import 'package:rxdart/rxdart.dart';
 
 class BlocMoviesTopRated {
   final Repository _repository = Repository();
-  final BehaviorSubject<MovieResponse> _subject =
-      BehaviorSubject<MovieResponse>();
+  final ReplaySubject<MovieResponse> _subject = ReplaySubject<MovieResponse>();
+  int pageNo = 1;
 
-  BehaviorSubject<MovieResponse> get subject => _subject;
+  ReplaySubject<MovieResponse> get subject => _subject;
 
   getMovies() async {
-    MovieResponse response = await _repository.getMoviesTopRated();
-    _subject.sink.add(response);
+    MovieResponse response = await _repository.getMoviesTopRated(pageNo++);
+    //_subject.sink.add(response);
+    _subject.add(response);
+  }
+
+  Future<MovieResponse> getMoviesList() async {
+    MovieResponse response = await _repository.getMoviesTopRated(pageNo++);
+    return response;
   }
 
   void drainStream() {
-    _subject.value = null;
+    //_subject.value = null;
   }
 
   @mustCallSuper

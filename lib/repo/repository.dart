@@ -51,10 +51,10 @@ class Repository {
     }
   }
 
-  Future<MovieResponse> getMoviesTopRated() async {
+  Future<MovieResponse> getMoviesTopRated(int pageNo) async {
     try {
-      final response =
-          await HTTP.get('$moviesTopRatedUrl?api_key=${API.apiKey}');
+      final response = await HTTP
+          .get('$moviesTopRatedUrl?api_key=${API.apiKey}&page=$pageNo');
       if (response.statusCode == 200) {
         return MovieResponse.fromJson(jsonDecode(response.body));
       } else {
@@ -90,12 +90,6 @@ class Repository {
 
   Future<MovieResponse> getMoviesByGenre(int genreId) async {
     try {
-      final headers = {
-        'api_key': API.apiKey,
-        'language': 'en-US',
-        'page': 1,
-        'with_genre': genreId,
-      };
       final response = await HTTP
           .get('$moviesAllUrl?api_key=${API.apiKey}&with_genre=$genreId');
       return MovieResponse.fromJson(jsonDecode(response.body));

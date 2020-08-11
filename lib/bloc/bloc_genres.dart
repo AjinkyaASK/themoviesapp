@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:themoviesapp/model/actor.dart';
 import 'package:themoviesapp/model/genre.dart';
-import 'package:themoviesapp/model/movie.dart';
 import 'package:themoviesapp/repo/repository.dart';
 import 'package:rxdart/rxdart.dart';
 

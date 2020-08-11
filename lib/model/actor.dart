@@ -12,7 +12,8 @@ class Actor {
   Actor.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
-        picture = 'https://image.tmdb.org/t/p/w200' + json['profile_path'];
+        picture =
+            'https://image.tmdb.org/t/p/w200' + (json['profile_path'] ?? '');
 }
 
 class ActorResponse {

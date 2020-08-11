@@ -10,15 +10,15 @@ class BlocMoviesAll {
 
   BehaviorSubject<MovieResponse> get subject => _subject;
 
-  static MovieResponse defaultResponse;
+  static MovieResponse _defaultResponse;
 
   getMovies() async {
     MovieResponse response = await _repository.getMovies();
-    defaultResponse = response;
+    _defaultResponse = response;
     _subject.sink.add(response);
   }
 
-  get DefaultResponse => defaultResponse;
+  get defaultResponse => _defaultResponse;
 
   void drainStream() {
     _subject.value = null;
