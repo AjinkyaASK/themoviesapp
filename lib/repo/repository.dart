@@ -6,24 +6,44 @@ import 'package:themoviesapp/model/genre.dart';
 import 'package:themoviesapp/model/movie.dart';
 import 'package:http/http.dart' as HTTP;
 
-class Repository {
-  static final String moviesAllUrl = '${API.mainPath}/discover/movie';
-  static final String moviesNowPlayingUrl = '${API.mainPath}/movie/now_playing';
-  static final String moviesTopRatedUrl = '${API.mainPath}/movie/top_rated';
-  static final String moviesSearchUrl = '${API.mainPath}/search/movie';
-  static final String genresUrl = '${API.mainPath}/genre/movie/list';
-  static final String actorsUrl = '${API.mainPath}/trending/person/week';
+enum MoviesDataType { AllMovies, NowPlaying, TopRated, BySearch, ByGenre }
 
+Map<dynamic, String> uriByMovieDataType = {
+  MoviesDataType.AllMovies: API.moviesAllUrl,
+  MoviesDataType.NowPlaying: API.moviesNowPlayingUrl,
+  MoviesDataType.TopRated: API.moviesTopRatedUrl,
+  MoviesDataType.BySearch: API.moviesSearchUrl,
+  MoviesDataType.ByGenre: API.genresUrl,
+};
+
+class Repository {
   static var headers = {
     'api_key': API.apiKey,
     'language': 'en-US',
     'page': 1,
   };
 
+  Future<MovieResponse> getMovies2(MoviesDataType moviesDataType) async {
+    try {
+      print('${uriByMovieDataType[moviesDataType]}?api_key=${API.apiKey}');
+      final response = await HTTP
+          .get('${uriByMovieDataType[moviesDataType]}?api_key=${API.apiKey}');
+      if (response.statusCode == 200) {
+        return MovieResponse.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception('Failed to get movie2 details');
+      }
+    } catch (error, stackTrace) {
+      print('Error in getMovies2(): $error, stackTrace: $stackTrace');
+      throw Exception('Failed to get movie details');
+    }
+  }
+
   Future<MovieResponse> getMovies() async {
     try {
-      print('$moviesAllUrl?api_key=${API.apiKey}');
-      final response = await HTTP.get('$moviesAllUrl?api_key=${API.apiKey}');
+      print('${API.moviesAllUrl}?api_key=${API.apiKey}');
+      final response =
+          await HTTP.get('${API.moviesAllUrl}?api_key=${API.apiKey}');
       if (response.statusCode == 200) {
         return MovieResponse.fromJson(jsonDecode(response.body));
       } else {
@@ -37,9 +57,9 @@ class Repository {
 
   Future<MovieResponse> getMoviesNowPlaying() async {
     try {
-      print('$moviesNowPlayingUrl?api_key=${API.apiKey}');
+      print('${API.moviesNowPlayingUrl}?api_key=${API.apiKey}');
       final response =
-          await HTTP.get('$moviesNowPlayingUrl?api_key=${API.apiKey}');
+          await HTTP.get('${API.moviesNowPlayingUrl}?api_key=${API.apiKey}');
       if (response.statusCode == 200) {
         return MovieResponse.fromJson(jsonDecode(response.body));
       } else {
@@ -54,7 +74,7 @@ class Repository {
   Future<MovieResponse> getMoviesTopRated(int pageNo) async {
     try {
       final response = await HTTP
-          .get('$moviesTopRatedUrl?api_key=${API.apiKey}&page=$pageNo');
+          .get('${API.moviesTopRatedUrl}?api_key=${API.apiKey}&page=$pageNo');
       if (response.statusCode == 200) {
         return MovieResponse.fromJson(jsonDecode(response.body));
       } else {
@@ -69,9 +89,9 @@ class Repository {
   Future<MovieResponse> getMoviesBySearch(String searchText) async {
     if (searchText.length > 0) {
       try {
-        print('$moviesSearchUrl?api_key=${API.apiKey}&query=$searchText');
-        final response = await HTTP
-            .get('$moviesSearchUrl?api_key=${API.apiKey}&query=$searchText');
+        print('${API.moviesSearchUrl}?api_key=${API.apiKey}&query=$searchText');
+        final response = await HTTP.get(
+            '${API.moviesSearchUrl}?api_key=${API.apiKey}&query=$searchText');
         if (response.statusCode == 200) {
           print('Search results JSON: ${jsonDecode(response.body)}');
           return MovieResponse.fromJson(jsonDecode(response.body));
@@ -91,7 +111,7 @@ class Repository {
   Future<MovieResponse> getMoviesByGenre(int genreId) async {
     try {
       final response = await HTTP
-          .get('$moviesAllUrl?api_key=${API.apiKey}&with_genre=$genreId');
+          .get('${API.moviesAllUrl}?api_key=${API.apiKey}&with_genre=$genreId');
       return MovieResponse.fromJson(jsonDecode(response.body));
     } catch (error, stackTrace) {
       print('Error in getMoviesByGenre(): $error, stackTrace: $stackTrace');
@@ -101,7 +121,7 @@ class Repository {
 
   Future<GenreResponse> getGenres() async {
     try {
-      final response = await HTTP.get(genresUrl, headers: headers);
+      final response = await HTTP.get(API.genresUrl, headers: headers);
       return GenreResponse.fromJson(jsonDecode(response.body));
     } catch (error, stackTrace) {
       print('Error in getGenres(): $error, stackTrace: $stackTrace');
@@ -111,8 +131,8 @@ class Repository {
 
   Future<ActorResponse> getActors() async {
     try {
-      print('$actorsUrl?api_key=${API.apiKey}');
-      final response = await HTTP.get('$actorsUrl?api_key=${API.apiKey}');
+      print('${API.actorsUrl}?api_key=${API.apiKey}');
+      final response = await HTTP.get('${API.actorsUrl}?api_key=${API.apiKey}');
       if (response.statusCode == 200) {
         return ActorResponse.fromJson(jsonDecode(response.body));
       } else {
