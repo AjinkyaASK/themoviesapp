@@ -7,7 +7,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:themoviesapp/bloc/bloc_moviesnowplaying.dart';
-import 'package:themoviesapp/screens/moviePage.dart';
+import 'package:themoviesapp/screens/movie_page.dart';
 
 double homeHeadershrinkFactor = 1;
 double homeHeadershrinkFactorEnhanced = 1;

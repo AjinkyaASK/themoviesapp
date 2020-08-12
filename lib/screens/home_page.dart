@@ -7,14 +7,14 @@ import 'package:themoviesapp/bloc/bloc_moviesall.dart';
 import 'package:themoviesapp/bloc/bloc_moviestoprated.dart';
 import 'package:themoviesapp/bloc/searchProvider.dart';
 import 'package:themoviesapp/model/movie.dart';
-import 'package:themoviesapp/screens/moviePage.dart';
-import 'package:themoviesapp/ui/customDeviderWidget.dart';
-import 'package:themoviesapp/ui/homePageSliverHeader.dart';
+import 'package:themoviesapp/screens/movie_page.dart';
+import 'package:themoviesapp/ui/custom_devider.dart';
+import 'package:themoviesapp/ui/home_page_sliver_header.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 
 import 'package:themoviesapp/bloc/bloc_moviesearch.dart';
-import 'package:themoviesapp/ui/searchResultWidgets.dart';
+import 'package:themoviesapp/ui/search_result_widgets.dart';
 import 'package:themoviesapp/utils/constants.dart';
 import 'package:themoviesapp/utils/values.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:themoviesapp/model/movie.dart';
 import 'package:themoviesapp/ui/icon_label_container_border_circular.dart';
-import 'package:themoviesapp/ui/moviePageSliverHeader.dart';
+import 'package:themoviesapp/ui/movie_page_sliver_header.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:themoviesapp/utils/constants.dart';
 

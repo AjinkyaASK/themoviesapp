@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:themoviesapp/screens/homePage.dart';
+import 'package:themoviesapp/screens/home_page.dart';
 
 void main() {
   runApp(MyApp());
