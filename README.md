@@ -37,6 +37,7 @@
 ## Screenshots
 Note: Screenshots are somewhat outdated due to the recent changes in design. Getting udpated soon.
 <br>
+<br>
 <img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/1.png" width='250px'
          alt="Screenshots">
 <img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/2.png" width='250px'
@@ -73,8 +74,8 @@ This software uses the following open source packages:
 Coming Soon
 
 ## You may also like...
-
-Coming Soon
+- [Covid-19 Tracker App](https://github.com/AjinkyaASK/covid19_tracker_restapi)
+- More coming Soon
 
 ## License
 
