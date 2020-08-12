@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:themoviesapp/model/movie.dart';
+import 'package:themoviesapp/ui/icon_label_container_border_circular.dart';
 import 'package:themoviesapp/ui/moviePageSliverHeader.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:themoviesapp/utils/constants.dart';
 
 class MoviePage extends StatefulWidget {
   final Movie movie;
@@ -44,19 +46,16 @@ class _MoviePageState extends State<MoviePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF181822),
+      backgroundColor: DefaultBackgroundColor,
       body: CustomScrollView(
         physics: BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverPersistentHeader(
             pinned: true,
-            delegate: MoviePageSliverHeaderDelegate(
-                posterPath: widget.movie.poster,
-                backPosterPath: widget.movie.backPoster),
+            delegate: MoviePageSliverHeaderDelegate(movie: widget.movie),
           ),
           SliverToBoxAdapter(
             child: Container(
-              height: 800,
               child: Column(
                 children: <Widget>[
                   Opacity(
@@ -68,152 +67,75 @@ class _MoviePageState extends State<MoviePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Flexible(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 16, bottom: 16),
-                              child: Text(
-                                widget.movie.title,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.white.withOpacity(0.9),
-                                  fontWeight: FontWeight.w600,
-                                  shadows: [
-                                    BoxShadow(
-                                        color: Colors.black38,
-                                        blurRadius: 4,
-                                        offset: Offset(1, 1))
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                          SizedBox(height: 12),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.language,
-                                    size: 24,
-                                    color: Colors.white.withOpacity(0.75),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 12),
-                                    child: Text(
-                                      'English',
-                                      style: TextStyle(
-                                        color: Colors.white.withOpacity(0.75),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              IconLabelContainerBorderCircular(
+                                iconData: Icons.language,
+                                title: 'English',
+                                color: Colors.white.withOpacity(0.75),
                               ),
-                              Column(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.star,
-                                    size: 24,
-                                    color: Colors.amber[200].withOpacity(0.75),
-                                  ),
-                                  SizedBox(height: 12),
-                                  Text(
-                                    widget.movie.rating.toString(),
-                                    style: TextStyle(
-                                      color: Colors.white.withOpacity(0.9),
-                                      fontWeight: FontWeight.w300,
-                                      shadows: [
-                                        BoxShadow(
-                                            color: Colors.black38,
-                                            blurRadius: 4,
-                                            offset: Offset(1, 1))
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                              IconLabelContainerBorderCircular(
+                                iconData: Icons.favorite,
+                                title: widget.movie.popularity.toString(),
+                                color: Colors.red.withOpacity(0.75),
                               ),
-                              Column(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.favorite,
-                                    size: 24,
-                                    color: Colors.red[400],
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 12),
-                                    child: Text(
-                                      widget.movie.voteCount.toString(),
-                                      style: TextStyle(
-                                        color: Colors.white.withOpacity(0.75),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              IconLabelContainerBorderCircular(
+                                iconData: Icons.star,
+                                title: widget.movie.rating.toString(),
+                                color: Colors.amber.withOpacity(0.75),
                               ),
-                              Column(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.remove_red_eye,
-                                    size: 24,
-                                    color: Colors.white.withOpacity(0.75),
-                                  ),
-                                  SizedBox(height: 12),
-                                  Text(
-                                    widget.movie.popularity.toString(),
-                                    style: TextStyle(
-                                      color: Colors.white.withOpacity(0.9),
-                                      fontWeight: FontWeight.w300,
-                                      shadows: [
-                                        BoxShadow(
-                                            color: Colors.black38,
-                                            blurRadius: 4,
-                                            offset: Offset(1, 1))
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                              IconLabelContainerBorderCircular(
+                                iconData: Icons.remove_red_eye,
+                                title: widget.movie.voteCount.toString(),
+                                color: Colors.white.withOpacity(0.75),
+                              ),
+                              IconLabelContainerBorderCircular(
+                                iconData: Icons.remove_red_eye,
+                                title: widget.movie.voteCount.toString(),
+                                color: Colors.white.withOpacity(0.75),
                               ),
                             ],
                           ),
-                          SizedBox(height: 20),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.15),
-                                borderRadius: BorderRadius.circular(4)),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 6),
-                            margin: const EdgeInsets.only(bottom: 24, top: 12),
-                            child: Text(
-                              'Synopsis',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 1.05,
-                                color: Colors.white.withOpacity(0.8),
-                              ),
+                          SizedBox(height: 40),
+                          Text(
+                            'Synopsis',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.05,
+                              color: Colors.white.withOpacity(0.8),
                             ),
+                          ),
+                          Container(
+                            width: 35,
+                            height: 2,
+                            color: Colors.white.withOpacity(0.25),
+                            margin: const EdgeInsets.symmetric(vertical: 12),
                           ),
                           Text(
                             widget.movie.overview,
                             textAlign: TextAlign.justify,
-                            maxLines: 10,
+                            maxLines: 20,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              color: Colors.white.withOpacity(0.75),
+                              fontSize: 13,
+                              height: 1.5,
+                              color: Colors.white.withOpacity(0.65),
                             ),
                           ),
                           Container(
                             decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.white.withOpacity(0.35),
-                                  width: 0.5,
-                                ),
+                                color: Colors.white.withOpacity(0.05),
+                                // border: Border.all(
+                                //   color: Colors.white.withOpacity(0.35),
+                                //   width: 0.5,
+                                // ),
                                 borderRadius: BorderRadius.circular(4)),
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
+                                horizontal: 12, vertical: 8),
                             margin: const EdgeInsets.only(bottom: 18, top: 22),
                             child: Text(
                               'Read More',
