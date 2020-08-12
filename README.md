@@ -35,7 +35,7 @@
 * Cross platform (iOS and Android)
 
 ## Screenshots
-
+(PS: Screenshots are somewhat outdated due to the recent changes in design | Updating soon..)
 <img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/1.png" width='250px'
          alt="Screenshots">
 <img src="https://raw.githubusercontent.com/AjinkyaASK/themoviesapp/master/screenshots/2.png" width='250px'
